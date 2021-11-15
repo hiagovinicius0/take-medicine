@@ -71,3 +71,11 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## ENV
+
+TOKEN_TELEGRAM= Token do seu bot
+CHAT_ID_TELEGRAM= Chat que deseja que o chat envie
+CHAT_MESSAGE=Mensagem que será enviada (Já tomou seu remédio?)
+START_HOUR= Hora de começar a lembrar (00 até 23)
+REMEMBER_EVERY=A cada X minutos para lembrar 
