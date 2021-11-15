@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { TelegramCallbackQuery, TelegramService } from 'nestjs-telegram';
@@ -22,13 +23,12 @@ export class BotService implements OnModuleInit {
     const TelegramBot = require('node-telegram-bot-api');
     const bot = new TelegramBot(token, { polling: true });
 
-    bot.on('message', async () => {});
-
     bot.on('callback_query', async (msg: TelegramCallbackQuery) => {
       if (msg.data.includes('yes')) {
         await bot.sendMessage(msg.from.id, 'Ok!');
         this.cronService.deleteCron('remember');
       }
+
       if (msg.data.includes('no')) {
         bot.sendMessage(msg.from.id, 'Ok!');
       }
@@ -44,6 +44,7 @@ export class BotService implements OnModuleInit {
           this.configService.get('REMEMBER_EVERY'),
         );
     }
+
     const findDaily = this.cronService.getCron('daily');
     if (!findDaily) this.cronService.addCronJob('daily');
 

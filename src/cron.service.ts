@@ -1,7 +1,7 @@
 import { forwardRef, Inject, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { SchedulerRegistry } from '@nestjs/schedule';
-import { CronJob, job } from 'cron';
+import { CronJob } from 'cron';
 import { BotService } from './bot.service';
 
 @Injectable()
@@ -38,11 +38,13 @@ export class CronService {
     const jobs = this.schedulerRegistry.getCronJobs();
     jobs.forEach((value, key) => {
       let next;
+
       try {
         next = value.nextDates().toDate();
       } catch (e) {
         next = 'error: next fire date is in the past!';
       }
+
       this.logger.log(`job: ${key} -> next: ${next}`);
     });
   }
