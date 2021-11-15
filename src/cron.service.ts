@@ -13,7 +13,7 @@ export class CronService {
     private configService: ConfigService,
   ) {}
   private readonly logger = new Logger();
-  addCronJob(name: string, minutes?: number) {
+  addCronJob(name: string, minutes?: number): void {
     const job = new CronJob(
       minutes
         ? `*/${minutes} * * * *`
@@ -30,11 +30,11 @@ export class CronService {
       `job ${name} added for each minute at ${minutes} minutes!`,
     );
   }
-  deleteCron(name: string) {
+  deleteCron(name: string): void {
     this.schedulerRegistry.deleteCronJob(name);
     this.logger.warn(`job ${name} deleted!`);
   }
-  getCrons() {
+  getCrons(): void {
     const jobs = this.schedulerRegistry.getCronJobs();
     jobs.forEach((value, key) => {
       let next;
@@ -48,7 +48,7 @@ export class CronService {
       this.logger.log(`job: ${key} -> next: ${next}`);
     });
   }
-  getCron(name: string) {
+  getCron(name: string): boolean {
     return this.schedulerRegistry.doesExists('cron', name);
   }
 }

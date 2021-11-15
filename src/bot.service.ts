@@ -1,7 +1,11 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { TelegramCallbackQuery, TelegramService } from 'nestjs-telegram';
+import {
+  TelegramCallbackQuery,
+  TelegramMessage,
+  TelegramService,
+} from 'nestjs-telegram';
 import { OptionBox } from './constants';
 import { CronService } from './cron.service';
 
@@ -13,11 +17,11 @@ export class BotService implements OnModuleInit {
     public readonly cronService: CronService,
   ) {}
 
-  onModuleInit() {
+  onModuleInit(): void {
     this.botMessage();
     this.sendMessage(true);
   }
-  async botMessage() {
+  async botMessage(): Promise<void> {
     process.env.NTBA_FIX_319 = '1';
     const token = this.configService.get('TOKEN_TELEGRAM');
     const TelegramBot = require('node-telegram-bot-api');
@@ -35,7 +39,7 @@ export class BotService implements OnModuleInit {
     });
   }
 
-  async sendMessage(cronJob?: boolean) {
+  async sendMessage(cronJob?: boolean): Promise<TelegramMessage> {
     if (cronJob) {
       const findRemember = this.cronService.getCron('remember');
       if (!findRemember)
