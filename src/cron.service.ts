@@ -22,6 +22,7 @@ export class CronService {
         this.logger.warn(`time (${minutes}) for job ${name} to run!`);
         this.botService.sendMessage();
       },
+      'America/Sao_Paulo',
     );
 
     this.schedulerRegistry.addCronJob(name, job);
